@@ -31,7 +31,7 @@ public class MoneyTransferTest {
         var amount = generateValidAmount(firstCardBalance);
         var expectedBalanceFirstCard = firstCardBalance - amount;
         var expectedBalanceSecondCard = secondCardBalance + amount;
-        var transferPages = dashboard.getCardBalance(secondCardInfo);
+        var transferPages = dashboard.selectCardToTransfer(secondCardInfo);
         dashboard = transferPages.makeValidTransfer(String.valueOf(amount), firstCardInfo);
         var actualBalanceFirstCard = dashboard.getCardBalance(firstCardInfo);
         var actualBalanceSecondCard = dashboard.getCardBalance(secondCardInfo);
@@ -39,22 +39,22 @@ public class MoneyTransferTest {
         assertEquals(expectedBalanceSecondCard, actualBalanceSecondCard);
     }
 
-   // @Test
-    //    void getErrorMessageIfAmountMoreBalance() {
-    //        var firstCardInfo = getFirstCardInfo();
-    //        var secondCardInfo = getSecondCardInfo();
-    //        var firstCardBalance = dashboard.getCardBalance(firstCardInfo);
-    //        var secondCardBalance = dashboard.getCardBalance(secondCardInfo);
-    //        var amount = generateInvalidAmount(secondCardBalance);
-    //        var transferPages = dashboard.selectCardToTransfer(firstCardInfo);
-    //        transferPages.makeTransfer(String.valueOf(amount), secondCardInfo);
-    //        transferPages.findErrorMessage("Выполнена поопытка перевода суммы, превышающей остаток на карте списания");
-    //        var actualBalanceFirstCard = dashboard.getCardBalance(firstCardInfo);
-    //        var actualBalanceSecondCard = dashboard.getCardBalance(secondCardInfo);
-    //        assertEquals(firstCardBalance, actualBalanceFirstCard);
-    //        assertEquals(secondCardBalance, actualBalanceSecondCard);
-    //
-    //    }
+    @Test
+    void getErrorMessageIfAmountMoreBalance() {
+        var firstCardInfo = getFirstCardInfo();
+        var secondCardInfo = getSecondCardInfo();
+        var firstCardBalance = dashboard.getCardBalance(firstCardInfo);
+        var secondCardBalance = dashboard.getCardBalance(secondCardInfo);
+        var amount = generateInvalidAmount(secondCardBalance);
+        var transferPages = dashboard.selectCardToTransfer(firstCardInfo);
+        transferPages.makeTransfer(String.valueOf(amount), secondCardInfo);
+        transferPages.findErrorMessage("Выполнена поопытка перевода суммы, превышающей остаток на карте списания");
+        var actualBalanceFirstCard = dashboard.getCardBalance(firstCardInfo);
+        var actualBalanceSecondCard = dashboard.getCardBalance(secondCardInfo);
+        assertEquals(firstCardBalance, actualBalanceFirstCard);
+        assertEquals(secondCardBalance, actualBalanceSecondCard);
+
+    }
 }
 
 
